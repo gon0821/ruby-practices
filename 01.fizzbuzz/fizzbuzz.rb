@@ -2,7 +2,7 @@
 
 def fizzbuzz(min, max)
   (min..max).each do |i|
-    if i % 3 == 0 && i % 5 == 0
+    if i % 15 == 0
       puts "FizzBuzz"
     elsif i % 3 == 0
       puts "Fizz"
