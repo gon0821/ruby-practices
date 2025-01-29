@@ -1,4 +1,4 @@
-#!/bin/sh ruby
+#!/usr/bin/env ruby
 
 def fizzbuzz(min, max)
   (min..max).each do |i|
