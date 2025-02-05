@@ -18,10 +18,25 @@ end
 
 frames = shots.each_slice(2).to_a
 # [[8, 2], [9, 0], [7, 2], [10, 0], [8, 2], [6, 2], [7, 3], [8, 0], [9, 1]]
+# [[7, 1], [10, 0], [10, 0], [2, 5], [6, 0], [8, 2], [10, 0], [1, 2], [7, 1]]
 
 point = 0
+spare = false
 frames.each do |frame|
-  point = point + frame.sum
+  if frame.sum == 10
+    if spare
+      point += frame.sum + frame[0]
+    else
+      point += frame.sum
+    end
+    spare = true
+  else
+    if spare
+      point += frame.sum + frame[0]
+    else
+      point += frame.sum
+    end
+    spare = false
+  end
 end
 p point
-# 84
