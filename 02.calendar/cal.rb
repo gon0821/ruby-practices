@@ -2,7 +2,6 @@
 require 'date'
 require 'optparse'
 
-INDENT = (3..21).step(3).to_a.freeze
 DAY_OF_WEEK = %w(日 月 火 水 木 金 土).freeze
 
 params = ARGV.getopts('y:','m:')
@@ -14,25 +13,19 @@ def set_year_month(year, month)
 end
 
 def set_day_of_the_week
-  DAY_OF_WEEK.each do |day|
-    print "#{day}".rjust(2)
-  end
-  print "\n"
+  puts DAY_OF_WEEK.map {it.rjust(2)}.join
 end
 
 def display_dates(year, month)
   beginning_of_month = Date.new(year, month, 1)
   end_of_month = Date.new(year, month, -1)
 
-  set_dates_of_month(beginning_of_month, INDENT[beginning_of_month.wday])
+  print " " * (beginning_of_month.wday * 3)
 
-  (beginning_of_month.next..end_of_month).each do |day|
-    set_dates_of_month(day, INDENT[0])
+  (beginning_of_month..end_of_month).each do |day|
+    print "#{day.day}".rjust(3)
+    print "\n" if day.saturday?
   end
-end
-
-def set_dates_of_month(day, indent)
-  print day.saturday? ? "#{day.day}\n".rjust(indent + 1) : "#{day.day}".rjust(indent)
 end
 
 set_year_month(year, month)
