@@ -2,6 +2,7 @@
 require 'date'
 require 'optparse'
 
+INDENT = 3
 DAY_OF_WEEK = %w(日 月 火 水 木 金 土).freeze
 
 params = ARGV.getopts('y:','m:')
@@ -20,11 +21,11 @@ def display_dates(year, month)
   beginning_of_month = Date.new(year, month, 1)
   end_of_month = Date.new(year, month, -1)
 
-  print " " * (beginning_of_month.wday * 3)
+  print " " * (beginning_of_month.wday * INDENT)
 
-  (beginning_of_month..end_of_month).each do |day|
-    print "#{day.day}".rjust(3)
-    print "\n" if day.saturday?
+  (beginning_of_month..end_of_month).each do |date|
+    print date.day.to_s.rjust(INDENT)
+    puts if date.saturday?
   end
 end
 
