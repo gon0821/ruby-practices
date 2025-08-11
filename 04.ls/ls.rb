@@ -1,42 +1,29 @@
 # frozen_string_literal: true
 
-COLUMN_COUNT = 3
+COLUMN_SIZE = 3
 
-current_entries = Dir.entries('.')
+directory_contents = Dir.glob('*')
 
-displayed_entries = current_entries.reject do |file|
-  file.start_with?('.')
+row_size = directory_contents.size.fdiv(COLUMN_SIZE).ceil
+
+def sliced_directory_contents(directory_contents, row_size)
+  directory_contents.each_slice(row_size).to_a
 end
 
-sorted_entries = displayed_entries.sort
-
-entry_count = displayed_entries.size
-row_size = (entry_count - 1) / COLUMN_COUNT + 1
-
-def sliced_array(entries, size)
-  array = []
-  entries.each_slice(size) do |entry|
-    array.push(entry)
-  end
-  array
-end
-
-def transposed_array(arrays, size)
-  entries = []
-  size.times do |n|
-    row_array = arrays.map do |array|
-      array[n]
+def transposed_directory_contents(directory_contents, row_size)
+  Array.new(row_size) do |index|
+    directory_contents.map do |row_content|
+      row_content[index]
     end
-    entries.push(row_array)
   end
-  entries
 end
 
-entries = transposed_array(sliced_array(sorted_entries, row_size), row_size)
+sliced_directory_contents = sliced_directory_contents(directory_contents, row_size)
+formatted_directory_contents = transposed_directory_contents(sliced_directory_contents, row_size)
 
-entries.each do |entry|
-  entry.each do |e|
-    print e&.ljust(24)
+formatted_directory_contents.each do |row|
+  row.each do |column|
+    print column&.ljust(24)
   end
   puts
 end
