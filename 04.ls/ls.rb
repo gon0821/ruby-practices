@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require 'optparse'
+
 COLUMN_SIZE = 3
 
-entries = Dir.glob('*')
+params = ARGV.getopts('a')
+entries = params['a'] ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
 
 row_size = entries.size.ceildiv(COLUMN_SIZE)
 
