@@ -5,7 +5,7 @@ require 'optparse'
 COLUMN_SIZE = 3
 
 params = ARGV.getopts('a')
-entries = params['a'] ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
+entries = Dir.glob('*', params['a'] ? File::FNM_DOTMATCH : 0)
 
 row_size = entries.size.ceildiv(COLUMN_SIZE)
 
