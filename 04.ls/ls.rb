@@ -5,7 +5,8 @@ require 'optparse'
 COLUMN_SIZE = 3
 
 params = ARGV.getopts('r')
-entries = params['r'] ? Dir.glob('*').reverse : Dir.glob('*')
+entries = Dir.glob('*')
+entries = entries.reverse if params['r']
 
 row_size = entries.size.ceildiv(COLUMN_SIZE)
 
