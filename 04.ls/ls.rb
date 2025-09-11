@@ -85,16 +85,24 @@ end
 slice_entries = slice_entries(entries, row_size)
 formatted_entries = transpose_entries(slice_entries, row_size)
 
-if params['l']
+def long_option_display(entries)
   puts total_block(entries)
   entries.each do |entry|
     puts file_detail(entry)
   end
-else
-  formatted_entries.each do |row|
+end
+
+def no_option_display(entries)
+  entries.each do |row|
     row.each do |column|
       print column&.ljust(24)
     end
     puts
   end
+end
+
+if params['l']
+  long_option_display(entries)
+else
+  no_option_display(formatted_entries)
 end
