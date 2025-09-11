@@ -48,23 +48,24 @@ def file_additional_permission(file, total_permission)
 end
 
 def total_block(entries)
-  puts "total #{entries.sum { |entry| File.stat(entry).blocks }}"
+  "total #{entries.sum { |entry| File.stat(entry).blocks }}"
 end
 
 def file_detail(entry)
   file = File.stat(entry)
   file_mode = format('%06o', file.mode)
-
-  print file_type(file_mode.slice(0, 2))
   total_permission = (3..5).map { |i| file_permission(file_mode.slice(i, 1)) }.join
-  print file_additional_permission(file_mode.slice(2, 1), total_permission)
-  print file.nlink.to_s.rjust(3)
-  print Etc.getpwuid(file.uid).name.rjust(11)
-  print Etc.getgrgid(file.gid).name.rjust(7)
-  print file.size.to_s.rjust(6)
-  print file.mtime.month.to_s.rjust(2)
-  print file.mtime.strftime(' %e %R ')
-  puts File.path(entry)
+  [
+    file_type(file_mode.slice(0, 2)),
+    file_additional_permission(file_mode.slice(2, 1), total_permission),
+    file.nlink.to_s.rjust(3),
+    Etc.getpwuid(file.uid).name.rjust(11),
+    Etc.getgrgid(file.gid).name.rjust(7),
+    file.size.to_s.rjust(6),
+    file.mtime.month.to_s.rjust(2),
+    file.mtime.strftime(' %e %R '),
+    File.path(entry)
+  ].join
 end
 
 row_size = entries.size.ceildiv(COLUMN_SIZE)
@@ -85,9 +86,9 @@ slice_entries = slice_entries(entries, row_size)
 formatted_entries = transpose_entries(slice_entries, row_size)
 
 if params['l']
-  total_block(entries)
+  puts total_block(entries)
   entries.each do |entry|
-    file_detail(entry)
+    puts file_detail(entry)
   end
 else
   formatted_entries.each do |row|
