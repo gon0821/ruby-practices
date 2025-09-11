@@ -48,12 +48,11 @@ def file_additional_permission(file, total_permission)
 end
 
 def total_block(entries)
-  sum = 0
-  entries.each do |entry|
-    file = File.stat(entry)
-    sum += file.blocks
-  end
-  puts "total #{sum}"
+  sum_block =
+    entries.sum do |entry|
+      File.stat(entry).blocks
+    end
+  puts "total #{sum_block}"
 end
 
 def file_detail(entry)
