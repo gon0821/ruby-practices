@@ -56,7 +56,7 @@ def file_detail(entry)
   file_mode = format('%06o', file.mode)
 
   print file_type(file_mode.slice(0, 2))
-  total_permission = file_permission(file_mode.slice(3, 1)) + file_permission(file_mode.slice(4, 1)) + file_permission(file_mode.slice(5, 1))
+  total_permission = (3..5).map { |i| file_permission(file_mode.slice(i, 1)) }.join
   print file_additional_permission(file_mode.slice(2, 1), total_permission)
   print file.nlink.to_s.rjust(3)
   print Etc.getpwuid(file.uid).name.rjust(11)
