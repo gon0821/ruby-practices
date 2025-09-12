@@ -56,16 +56,15 @@ def file_detail(entry)
   file_mode = format('%06o', file.mode)
   total_permission = (3..5).map { |i| file_permission(file_mode.slice(i, 1)) }.join
   [
-    file_type(file_mode.slice(0, 2)),
-    file_additional_permission(file_mode.slice(2, 1), total_permission),
-    file.nlink.to_s.rjust(3),
-    Etc.getpwuid(file.uid).name.rjust(11),
-    Etc.getgrgid(file.gid).name.rjust(7),
-    file.size.to_s.rjust(6),
+    file_type(file_mode.slice(0, 2)) + file_additional_permission(file_mode.slice(2, 1), total_permission),
+    file.nlink.to_s.rjust(2),
+    Etc.getpwuid(file.uid).name,
+    Etc.getgrgid(file.gid).name,
+    file.size.to_s.rjust(5),
     file.mtime.month.to_s.rjust(2),
-    file.mtime.strftime(' %e %R '),
+    file.mtime.strftime('%e %R'),
     File.path(entry)
-  ].join
+  ].join(' ')
 end
 
 row_size = entries.size.ceildiv(COLUMN_SIZE)
