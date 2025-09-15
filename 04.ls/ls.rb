@@ -5,8 +5,9 @@ require 'etc'
 
 COLUMN_SIZE = 3
 
-params = ARGV.getopts('l')
-entries = Dir.glob('*')
+params = ARGV.getopts('alr')
+entries = Dir.glob('*', params['a'] ? File::FNM_DOTMATCH : 0)
+entries = entries.reverse if params['r']
 
 def file_type(file)
   {
