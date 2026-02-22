@@ -118,3 +118,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# 動作確認用ファイル
+05.wc/test/
