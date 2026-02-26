@@ -3,7 +3,7 @@
 
 def file_detail(file)
   [
-    File.read(file).split(/\R/).count.to_s.rjust(8),
+    File.read(file).scan(/\R/).count.to_s.rjust(8),
     File.read(file).split.count.to_s.rjust(7),
     File.read(file).bytesize.to_s.rjust(7),
     file
