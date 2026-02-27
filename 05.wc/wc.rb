@@ -19,7 +19,7 @@ def format_result(result, name, params)
     array << result[0].to_s.rjust(8) if params['l']
     array << result[1].to_s.rjust(7) if params['w']
     array << result[2].to_s.rjust(7) if params['c']
-  elsif
+  else
     array.push(result[0].to_s.rjust(8), result[1].to_s.rjust(7), result[2].to_s.rjust(7))
   end
   array << name
