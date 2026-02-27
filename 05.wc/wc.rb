@@ -5,11 +5,11 @@ require 'optparse'
 
 params = ARGV.getopts('lwc')
 
-def file_result(file)
+def input_result(input)
   [
-    File.read(file).scan(/\R/).count,
-    File.read(file).split.count,
-    File.read(file).bytesize,
+    input.scan(/\R/).count,
+    input.split.count,
+    input.bytesize,
   ]
 end
 
@@ -26,15 +26,21 @@ def format_result(result, name, params)
   array.join(' ')
 end
 
-sum = [0, 0, 0]
-ARGV.each do |file|
-  result = file_result(file)
-  sum[0] += result[0]
-  sum[1] += result[1]
-  sum[2] += result[2]
-  puts format_result(result, file, params)
-end
+if ARGV.count >= 1
+  sum = [0, 0, 0]
+  ARGV.each do |file|
+    result = input_result(File.read(file))
+    sum[0] += result[0]
+    sum[1] += result[1]
+    sum[2] += result[2]
+    puts format_result(result, file, params)
+  end
 
-if ARGV.count >= 2
-  puts format_result(sum, 'total', params)
+  if ARGV.count >= 2
+    puts format_result(sum, 'total', params)
+  end
+else
+  input = readlines.join
+  result = input_result(input)
+  puts format_result(result, "", params)
 end
