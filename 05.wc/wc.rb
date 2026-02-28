@@ -5,7 +5,7 @@ require 'optparse'
 
 params = ARGV.getopts('lwc')
 
-def input_result(input)
+def count_text(input)
   [
     input.scan(/\R/).count,
     input.split.count,
@@ -29,7 +29,7 @@ end
 if ARGV.count >= 1
   sum = [0, 0, 0]
   ARGV.each do |file|
-    result = input_result(File.read(file))
+    result = count_text(File.read(file))
     sum[0] += result[0]
     sum[1] += result[1]
     sum[2] += result[2]
@@ -38,6 +38,6 @@ if ARGV.count >= 1
   puts format_result(sum, 'total', params) if ARGV.count >= 2
 else
   input = readlines.join
-  result = input_result(input)
+  result = count_text(input)
   puts format_result(result, '', params)
 end
