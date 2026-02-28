@@ -4,6 +4,24 @@
 require 'optparse'
 
 params = ARGV.getopts('lwc')
+sum = [0, 0, 0]
+
+def main(params, sum)
+  ARGV.each do |file|
+    result = count_text(File.read(file))
+    sum[0] += result[0]
+    sum[1] += result[1]
+    sum[2] += result[2]
+    puts format_result(result, file, params)
+  end
+  puts format_result(sum, 'total', params) if ARGV.count >= 2
+
+  return unless ARGV.count.zero?
+
+  input = readlines.join
+  result = count_text(input)
+  puts format_result(result, '', params)
+end
 
 def count_text(input)
   [
@@ -26,18 +44,4 @@ def format_result(result, name, params)
   array.join(' ')
 end
 
-sum = [0, 0, 0]
-ARGV.each do |file|
-  result = count_text(File.read(file))
-  sum[0] += result[0]
-  sum[1] += result[1]
-  sum[2] += result[2]
-  puts format_result(result, file, params)
-end
-puts format_result(sum, 'total', params) if ARGV.count >= 2
-
-if ARGV.count == 0
-  input = readlines.join
-  result = count_text(input)
-  puts format_result(result, '', params)
-end
+main(params, sum)
