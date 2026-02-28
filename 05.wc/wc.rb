@@ -9,7 +9,7 @@ def input_result(input)
   [
     input.scan(/\R/).count,
     input.split.count,
-    input.bytesize,
+    input.bytesize
   ]
 end
 
@@ -35,12 +35,9 @@ if ARGV.count >= 1
     sum[2] += result[2]
     puts format_result(result, file, params)
   end
-
-  if ARGV.count >= 2
-    puts format_result(sum, 'total', params)
-  end
+  puts format_result(sum, 'total', params) if ARGV.count >= 2
 else
   input = readlines.join
   result = input_result(input)
-  puts format_result(result, "", params)
+  puts format_result(result, '', params)
 end
