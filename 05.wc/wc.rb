@@ -18,30 +18,29 @@ def main(params, sum)
 
   return unless ARGV.count.zero?
 
-  input = readlines.join
-  result = count_text(input)
+  result = count_text(readlines.join)
   puts format_result(result, '', params)
 end
 
-def count_text(input)
+def count_text(file_or_standard_input)
   [
-    input.scan(/\R/).count,
-    input.split.count,
-    input.bytesize
+    file_or_standard_input.scan(/\R/).count,
+    file_or_standard_input.split.count,
+    file_or_standard_input.bytesize
   ]
 end
 
 def format_result(result, name, params)
-  array = []
+  displayed_line = []
   if params['l'] || params['w'] || params['c']
-    array << result[0].to_s.rjust(8) if params['l']
-    array << result[1].to_s.rjust(7) if params['w']
-    array << result[2].to_s.rjust(7) if params['c']
+    displayed_line << result[0].to_s.rjust(8) if params['l']
+    displayed_line << result[1].to_s.rjust(7) if params['w']
+    displayed_line << result[2].to_s.rjust(7) if params['c']
   else
-    array.push(result[0].to_s.rjust(8), result[1].to_s.rjust(7), result[2].to_s.rjust(7))
+    displayed_line.push(result[0].to_s.rjust(8), result[1].to_s.rjust(7), result[2].to_s.rjust(7))
   end
-  array << name
-  array.join(' ')
+  displayed_line << name
+  displayed_line.join(' ')
 end
 
 main(params, sum)
