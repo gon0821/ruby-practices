@@ -4,9 +4,9 @@
 require 'optparse'
 
 params = ARGV.getopts('lwc')
-sum = [0, 0, 0]
 
-def main(params, sum)
+def main(params)
+  sum = [0, 0, 0]
   ARGV.each do |file|
     result = count_text(File.read(file))
     sum[0] += result[0]
@@ -43,4 +43,4 @@ def format_result(result, name, params)
   displayed_line.join(' ')
 end
 
-main(params, sum)
+main(params)
