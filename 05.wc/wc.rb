@@ -8,11 +8,17 @@ params = ARGV.getopts('lwc')
 def main(params)
   sum = { lines: 0, words: 0, bytes: 0 }
   ARGV.each do |file|
-    result = count_text(File.read(file))
-    sum[:lines] += result[:lines]
-    sum[:words] += result[:words]
-    sum[:bytes] += result[:bytes]
-    puts format_result(result, file, params)
+    if File.directory?(file)
+      puts "wc: #{file}: read: Is a directory"
+    elsif File.exist?(file)
+      result = count_text(File.read(file))
+      sum[:lines] += result[:lines]
+      sum[:words] += result[:words]
+      sum[:bytes] += result[:bytes]
+      puts format_result(result, file, params)
+    else
+      puts "wc: #{file}: open: No such file or directory"
+    end
   end
   puts format_result(sum, 'total', params) if ARGV.count >= 2
 
