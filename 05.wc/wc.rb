@@ -6,7 +6,7 @@ require 'optparse'
 params = ARGV.getopts('lwc')
 
 def main(params)
-  sum = { lines: 0, words: 0, bytes: 0}
+  sum = { lines: 0, words: 0, bytes: 0 }
   ARGV.each do |file|
     result = count_text(File.read(file))
     sum[:lines] += result[:lines]
