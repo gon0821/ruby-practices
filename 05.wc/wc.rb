@@ -24,7 +24,7 @@ end
 
 def count_text(file_or_standard_input)
   [
-    file_or_standard_input.scan(/\R/).count,
+    file_or_standard_input.scan(/\n/).count,
     file_or_standard_input.split.count,
     file_or_standard_input.bytesize
   ]
