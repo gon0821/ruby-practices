@@ -6,7 +6,7 @@ class Game
   def initialize(mark_text)
     marks = mark_text.split(',')
     @frames =
-      9.times.map do
+      Array.new(9) do
         shots = marks[0] == 'X' ? marks.shift(1) : marks.shift(2)
         Frame.new(shots[0], shots[1])
       end
