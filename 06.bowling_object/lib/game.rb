@@ -15,22 +15,11 @@ class Game
 
   def calc_score
     @frames.each_with_index.sum do |frame, idx|
-      frame.score + (last_frame?(idx) ? 0 : add_bonus(frame, idx))
-    end
-  end
-
-  def add_bonus(frame, idx)
-    if frame.strike?
-      @frames[idx + 1].shots[0].score +
-        if @frames[idx + 1].strike? && !last_frame?(idx + 1)
-          @frames[idx + 2].shots[0].score
-        else
-          @frames[idx + 1].shots[1].score
-        end
-    elsif frame.spare?
-      @frames[idx + 1].shots[0].score
-    else
-      0
+      next_frame = @frames[idx + 1]
+      second_next_frame = @frames[idx + 2]
+      ninth_frame = last_frame?(idx + 1)
+      last_frame = last_frame?(idx)
+      frame.calc_score(next_frame, second_next_frame, ninth_frame, last_frame)
     end
   end
 
