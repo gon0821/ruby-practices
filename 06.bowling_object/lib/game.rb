@@ -5,11 +5,11 @@ require_relative 'frame'
 class Game
   def initialize(mark_text)
     marks = mark_text.split(',')
-    @frames = []
-    9.times do
-      shots = marks[0] == 'X' ? marks.shift(1) : marks.shift(2)
-      @frames << Frame.new(shots[0], shots[1])
-    end
+    @frames =
+      9.times.map do
+        shots = marks[0] == 'X' ? marks.shift(1) : marks.shift(2)
+        Frame.new(shots[0], shots[1])
+      end
     @frames << Frame.new(marks[0], marks[1], marks[2])
   end
 
