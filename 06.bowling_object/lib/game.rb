@@ -21,14 +21,14 @@ class Game
 
   def add_bonus(frame, idx)
     if frame.strike?
-      @frames[idx + 1].first_shot.score +
+      @frames[idx + 1].shots[0].score +
         if @frames[idx + 1].strike? && !last_frame?(idx + 1)
-          @frames[idx + 2].first_shot.score
+          @frames[idx + 2].shots[0].score
         else
-          @frames[idx + 1].second_shot.score
+          @frames[idx + 1].shots[1].score
         end
     elsif frame.spare?
-      @frames[idx + 1].first_shot.score
+      @frames[idx + 1].shots[0].score
     else
       0
     end
