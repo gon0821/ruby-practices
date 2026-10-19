@@ -17,13 +17,7 @@ class Game
     @frames.each_with_index.sum do |frame, idx|
       next_frame = @frames[idx + 1]
       second_next_frame = @frames[idx + 2]
-      ninth_frame = last_frame?(idx + 1)
-      last_frame = last_frame?(idx)
-      frame.calc_score(next_frame, second_next_frame, ninth_frame, last_frame)
+      frame.calc_score(next_frame, second_next_frame)
     end
-  end
-
-  def last_frame?(idx)
-    idx == 9
   end
 end

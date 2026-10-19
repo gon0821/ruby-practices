@@ -9,8 +9,8 @@ class Frame
     @shots = [Shot.new(first_mark), Shot.new(second_mark), Shot.new(third_mark)]
   end
 
-  def calc_score(next_frame, second_next_frame, ninth_frame, last_frame)
-    score + (last_frame ? 0 : add_bonus(next_frame, second_next_frame, ninth_frame))
+  def calc_score(next_frame, second_next_frame)
+    score + (next_frame ? add_bonus(next_frame, second_next_frame) : 0)
   end
 
   def score
@@ -25,10 +25,10 @@ class Frame
     !strike? && @shots[0].score + @shots[1].score == 10
   end
 
-  def add_bonus(next_frame, second_next_frame, ninth_frame)
+  def add_bonus(next_frame, second_next_frame)
     if strike?
       next_frame.shots[0].score +
-        if next_frame.strike? && !ninth_frame
+        if next_frame.strike? && second_next_frame
           second_next_frame.shots[0].score
         else
           next_frame.shots[1].score
